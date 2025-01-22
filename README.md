@@ -1,7 +1,5 @@
 # CareerPulse
 
-![CareerPulse Logo]()
-
 **CareerPulse** is a modern job aggregation platform designed to help job seekers find relevant vacancies from multiple
 sources (e.g., hh.ru, zarplata.ru) in one place. The platform provides personalized job recommendations, real-time
 notifications, and a seamless user experience.
