@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
+import {BrowserRouter as Router, Navigate, Route, Routes, useLocation} from 'react-router-dom';
 import {Container, CssBaseline, ThemeProvider} from "@mui/material";
 import theme from "./theme.ts";
 import {PageRoute} from "./utils/navigation/PageRoute.tsx";
@@ -7,13 +7,35 @@ import MainPage from "./pages/MainPage.tsx";
 import SearchVacancyPage from "./pages/SearchVacancyPage.tsx";
 import {LoginPage} from "./pages/LoginPage.tsx";
 import {RegisterPage} from "./pages/RegisterPage.tsx";
+import NavBar from "./components/NavBar.tsx";
+import {ReactNode} from "react";
+
+interface ILayoutProps {
+    children: ReactNode;
+}
+
+const Layout = ({children}: ILayoutProps) => {
+    const location = useLocation();
+
+    // Проверяем, нужно ли скрывать NavBar
+    const hideNavBar = location.pathname === "/";
+
+    return (
+        <>
+            {!hideNavBar && <NavBar/>}
+            {children}
+        </>
+    );
+};
 
 export default function App() {
     return (
         <ThemeProvider theme={theme}>
             <CssBaseline/>
             <Router>
-                <AppContent/>
+                <Layout>
+                    <AppContent/>
+                </Layout>
             </Router>
         </ThemeProvider>
     );
