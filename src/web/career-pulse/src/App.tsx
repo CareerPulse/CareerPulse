@@ -1,6 +1,5 @@
 import {BrowserRouter as Router, Navigate, Route, Routes, useLocation} from 'react-router-dom';
-import {Container, CssBaseline, ThemeProvider} from "@mui/material";
-import theme from "./theme.ts";
+import {Container, CssBaseline} from "@mui/material";
 import {PageRoute} from "./utils/navigation/PageRoute.tsx";
 import './App.css'
 import MainPage from "./pages/MainPage.tsx";
@@ -10,6 +9,7 @@ import {RegisterPage} from "./pages/RegisterPage.tsx";
 import NavBar from "./components/NavBar.tsx";
 import {ReactNode} from "react";
 import AdvancedSearchPage from "./pages/AdvancedSearchPage.tsx";
+import AppTheme from "./theme/AppTheme.tsx";
 
 interface ILayoutProps {
     children: ReactNode;
@@ -31,14 +31,14 @@ const Layout = ({children}: ILayoutProps) => {
 
 export default function App() {
     return (
-        <ThemeProvider theme={theme}>
-            <CssBaseline/>
+        <AppTheme>
+            <CssBaseline enableColorScheme/>
             <Router>
                 <Layout>
                     <AppContent/>
                 </Layout>
             </Router>
-        </ThemeProvider>
+        </AppTheme>
     );
 }
 
