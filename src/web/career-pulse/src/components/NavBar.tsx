@@ -6,7 +6,7 @@ const NavBar = () => {
     const navigate = useNavigate();
 
     return (
-        <AppBar position="static" color="primary">
+        <AppBar position="static" color="transparent" style={{boxShadow: "none"}}>
             <Toolbar sx={{display: "flex", justifyContent: "space-between"}}>
                 {/* Лого и название */}
                 <Box sx={{display: "flex", alignItems: "center", cursor: "pointer"}} onClick={() => navigate(PageRoute.main)}>
