@@ -4,10 +4,11 @@ import SearchIcon from "@mui/icons-material/Search";
 
 interface ISearchBarProps {
     onSearch: (query: string) => void;
+    searchQuery?: string;
 }
 
-const SearchBar: React.FC<ISearchBarProps> = ({onSearch}) => {
-    const [query, setQuery] = useState("");
+const SearchBar: React.FC<ISearchBarProps> = ({onSearch, searchQuery}) => {
+    const [query, setQuery] = useState(searchQuery ?? "");
 
     const handleSearch = () => {
         if (query.trim()) {

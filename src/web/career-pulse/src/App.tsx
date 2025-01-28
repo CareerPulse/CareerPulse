@@ -4,7 +4,7 @@ import theme from "./theme.ts";
 import {PageRoute} from "./utils/navigation/PageRoute.tsx";
 import './App.css'
 import MainPage from "./pages/MainPage.tsx";
-import SearchResultPage from "./pages/SearchResultPage.tsx";
+import SearchVacancyPage from "./pages/SearchVacancyPage.tsx";
 import {LoginPage} from "./pages/LoginPage.tsx";
 import {RegisterPage} from "./pages/RegisterPage.tsx";
 
@@ -25,7 +25,7 @@ function AppContent() {
             <Container sx={{padding: '20px'}}>
                 <Routes>
                     <Route path="/" element={<MainPage/>}/>
-                    <Route path={PageRoute.search} element={<SearchResultPage/>}/>
+                    <Route path={PageRoute.searchVacancy} element={<SearchVacancyPage/>}/>
                     <Route path={PageRoute.login} element={<LoginPage/>}/>
                     <Route path={PageRoute.register} element={<RegisterPage/>}/>
                     <Route path="*" element={<Navigate replace to="/"/>}/>
