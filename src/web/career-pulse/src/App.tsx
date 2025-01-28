@@ -1,35 +1,36 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
+import {BrowserRouter as Router, Navigate, Route, Routes} from 'react-router-dom';
+import {Container, CssBaseline, ThemeProvider} from "@mui/material";
+import theme from "./theme.ts";
+import {PageRoute} from "./utils/navigation/PageRoute.tsx";
 import './App.css'
+import MainPage from "./pages/MainPage.tsx";
+import SearchResultPage from "./pages/SearchResultPage.tsx";
+import {LoginPage} from "./pages/LoginPage.tsx";
+import {RegisterPage} from "./pages/RegisterPage.tsx";
 
-function App() {
-  const [count, setCount] = useState(0)
-
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+export default function App() {
+    return (
+        <ThemeProvider theme={theme}>
+            <CssBaseline/>
+            <Router>
+                <AppContent/>
+            </Router>
+        </ThemeProvider>
+    );
 }
 
-export default App
+function AppContent() {
+    return (
+        <Container sx={{display: 'flex', width: '100%', height: '100vh'}}>
+            <Container sx={{padding: '20px'}}>
+                <Routes>
+                    <Route path="/" element={<MainPage/>}/>
+                    <Route path={PageRoute.search} element={<SearchResultPage/>}/>
+                    <Route path={PageRoute.login} element={<LoginPage/>}/>
+                    <Route path={PageRoute.register} element={<RegisterPage/>}/>
+                    <Route path="*" element={<Navigate replace to="/"/>}/>
+                </Routes>
+            </Container>
+        </Container>
+    );
+}
