@@ -1,9 +1,15 @@
 import {Box, Container, Typography} from "@mui/material";
 import SearchBar from "../components/search/SearchBar.tsx";
+import {useNavigate} from "react-router-dom";
+import {PageRoute} from "../utils/navigation/PageRoute.tsx";
 
 const MainPage = () => {
+    const navigate = useNavigate();
+
     const handleSearch = (value: string) => {
-        console.log(value);
+        if (value.trim()) {
+            navigate(`${PageRoute.searchVacancy}?text=${encodeURIComponent(value)}`);
+        }
     };
 
     return (

@@ -1,6 +1,6 @@
 export enum PageRoute {
     saved = "/saved",
-    search = "/search",
+    searchVacancy = "/search/vacancy",
     register = "/auth/register",
     login = "/auth/login"
 }
