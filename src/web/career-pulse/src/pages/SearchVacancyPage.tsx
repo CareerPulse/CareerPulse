@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
-import {Box, Container, Typography} from "@mui/material";
+import {Box, CircularProgress, Container, Typography} from "@mui/material";
 import SearchBar from "../components/search/SearchBar.tsx";
 import VacancyCard from "../components/search/VacancyCard.tsx";
 import {PageRoute} from "../utils/navigation/PageRoute.tsx";
@@ -43,10 +43,19 @@ const SearchVacancyPage = () => {
     const text = queryParams.get("text") || "";
 
     const [vacancies, setVacancies] = useState<Vacancy[]>([]);
+    const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
-        // Замените mockVacancies на реальный запрос к API
-        setVacancies(mockVacancies)//.filter(v => v.name.toLowerCase().includes(text.toLowerCase())));
+        const fetchVacancies = async () => {
+            setLoading(true); // Начинаем загрузку
+            // Имитация задержки
+            setTimeout(() => {
+                setVacancies(mockVacancies); // Устанавливаем вакансии после задержки
+                setLoading(false); // Завершаем загрузку
+            }, 2000); // Задержка 2 секунды
+        };
+
+        fetchVacancies(); // Вызываем асинхронную функцию для загрузки данных
     }, [text]);
 
     const handleSearch = (value: string) => {
@@ -61,7 +70,12 @@ const SearchVacancyPage = () => {
             <Box my={4}>
                 <SearchBar onSearch={handleSearch} searchQuery={text}/>
             </Box>
-            {vacancies.length > 0 ? (
+
+            {loading ? (
+                <Box display="flex" justifyContent="center" my={4}>
+                    <CircularProgress/>
+                </Box>
+            ) : vacancies.length > 0 ? (
                 vacancies.map((vacancy) => (
                     <VacancyCard key={vacancy.id} vacancy={vacancy}/>
                 ))
