@@ -9,7 +9,7 @@ const NavBar = () => {
         <AppBar position="static" color="primary">
             <Toolbar sx={{display: "flex", justifyContent: "space-between"}}>
                 {/* Лого и название */}
-                <Box sx={{display: "flex", alignItems: "center", cursor: "pointer"}} onClick={() => navigate("/")}>
+                <Box sx={{display: "flex", alignItems: "center", cursor: "pointer"}} onClick={() => navigate(PageRoute.main)}>
                     <Typography variant="h6" fontWeight="bold" sx={{mr: 2}}>
                         CareerPulse
                     </Typography>

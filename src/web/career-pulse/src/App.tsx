@@ -9,6 +9,7 @@ import {LoginPage} from "./pages/LoginPage.tsx";
 import {RegisterPage} from "./pages/RegisterPage.tsx";
 import NavBar from "./components/NavBar.tsx";
 import {ReactNode} from "react";
+import AdvancedSearchPage from "./pages/AdvancedSearchPage.tsx";
 
 interface ILayoutProps {
     children: ReactNode;
@@ -18,7 +19,7 @@ const Layout = ({children}: ILayoutProps) => {
     const location = useLocation();
 
     // Проверяем, нужно ли скрывать NavBar
-    const hideNavBar = location.pathname === "/";
+    const hideNavBar = location.pathname === PageRoute.main;
 
     return (
         <>
@@ -46,11 +47,12 @@ function AppContent() {
         <Container sx={{display: 'flex', width: '100%', height: '100vh'}}>
             <Container sx={{padding: '20px'}}>
                 <Routes>
-                    <Route path="/" element={<MainPage/>}/>
+                    <Route path={PageRoute.main} element={<MainPage/>}/>
                     <Route path={PageRoute.searchVacancy} element={<SearchVacancyPage/>}/>
+                    <Route path={PageRoute.advancedSearchVacancy} element={<AdvancedSearchPage/>}/>
                     <Route path={PageRoute.login} element={<LoginPage/>}/>
                     <Route path={PageRoute.register} element={<RegisterPage/>}/>
-                    <Route path="*" element={<Navigate replace to="/"/>}/>
+                    <Route path="*" element={<Navigate replace to={PageRoute.main}/>}/>
                 </Routes>
             </Container>
         </Container>

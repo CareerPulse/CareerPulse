@@ -1,7 +1,7 @@
 // Request and Response Models for API Integration
 
 // Request Parameters Model
-type SearchVacanciesRequest = {
+export type SearchVacanciesRequest = {
     page?: number; // Default: 0
     per_page?: number; // Default: 10, Max: 100
     text?: string; // Search text with optional query language
@@ -40,7 +40,7 @@ type SearchVacanciesRequest = {
 };
 
 // Response Models
-type SearchVacanciesResponse = {
+export type SearchVacanciesResponse = {
     items: Vacancy[]; // List of vacancies
     found: number; // Total vacancies found
     pages: number; // Total pages available

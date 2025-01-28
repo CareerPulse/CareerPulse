@@ -9,7 +9,7 @@ export const LoginPage: React.FC = () => {
     const handleLogin = () => {
         // Здесь вы можете обработать вход в аккаунт
         console.log("Logged in!");
-        navigate("/");
+        navigate(PageRoute.main);
     };
 
     return (

@@ -1,6 +1,9 @@
 import {Box, Button, TextField} from "@mui/material";
 import React, {useState} from "react";
 import SearchIcon from "@mui/icons-material/Search";
+import {Tune} from "@mui/icons-material";
+import {useNavigate} from "react-router-dom";
+import {PageRoute} from "../../utils/navigation/PageRoute.tsx";
 
 interface ISearchBarProps {
     onSearch: (query: string) => void;
@@ -8,12 +11,17 @@ interface ISearchBarProps {
 }
 
 const SearchBar: React.FC<ISearchBarProps> = ({onSearch, searchQuery}) => {
+    const navigate = useNavigate();
     const [query, setQuery] = useState(searchQuery ?? "");
 
     const handleSearch = () => {
         if (query.trim()) {
             onSearch(query);
         }
+    };
+
+    const handleAdvancedSearch = () => {
+        navigate(PageRoute.advancedSearchVacancy);
     };
 
     const handleKeyPress = (event: React.KeyboardEvent) => {
@@ -50,7 +58,20 @@ const SearchBar: React.FC<ISearchBarProps> = ({onSearch, searchQuery}) => {
                     justifyContent: "center",
                     alignItems: "center"
                 }}
-            ></Button>
+            />
+            <Button
+                variant="contained"
+                color="primary"
+                onClick={handleAdvancedSearch}
+                startIcon={<Tune/>}
+                style={{
+                    height: "48px",
+                    borderRadius: "8px",
+                    padding: "0 16px",
+                    justifyContent: "center",
+                    alignItems: "center"
+                }}
+            />
         </Box>
     );
 };

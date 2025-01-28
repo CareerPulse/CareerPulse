@@ -8,7 +8,7 @@ export const RegisterPage: React.FC = () => {
 
     const handleRegister = () => {
         console.log("Registered!");
-        navigate("/");
+        navigate(PageRoute.main);
     };
 
     return (
