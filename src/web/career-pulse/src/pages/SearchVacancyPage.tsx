@@ -4,8 +4,10 @@ import {Box, CircularProgress, Container, Typography} from "@mui/material";
 import SearchBar from "../components/search/SearchBar.tsx";
 import VacancyCard from "../components/search/VacancyCard.tsx";
 import {PageRoute} from "../utils/navigation/PageRoute.tsx";
+import VacancySearchService from "../services/VacancySearchService.ts";
+import {SearchVacanciesRequest, Vacancy} from "../searchApiModels.ts";
 
-interface Vacancy {
+interface VacancyMock {
     id: string;
     name: string;
     employer: string;
@@ -15,7 +17,7 @@ interface Vacancy {
     url: string;
 }
 
-const mockVacancies: Vacancy[] = [
+const mockVacancies: VacancyMock[] = [
     {
         id: "1",
         name: "Личный помощник",
@@ -47,12 +49,25 @@ const SearchVacancyPage = () => {
 
     useEffect(() => {
         const fetchVacancies = async () => {
-            setLoading(true); // Начинаем загрузку
-            // Имитация задержки
-            setTimeout(() => {
-                setVacancies(mockVacancies); // Устанавливаем вакансии после задержки
+            try {
+                setLoading(true); // Начинаем загрузку
+
+                let request: SearchVacanciesRequest = {
+                    text: text
+                };
+
+                let vacancies = await VacancySearchService.search(request);
+
+                // Имитация задержки
+                setTimeout(() => {
+                    setVacancies(vacancies.items); // Устанавливаем вакансии после задержки
+                }, 2000); // Задержка 2 секунды
+            } catch (e) {
+                console.log(e);
+            } finally {
                 setLoading(false); // Завершаем загрузку
-            }, 2000); // Задержка 2 секунды
+            }
+
         };
 
         fetchVacancies(); // Вызываем асинхронную функцию для загрузки данных

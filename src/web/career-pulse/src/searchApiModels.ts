@@ -103,7 +103,7 @@ type AddressMetroStation = {
     lng: number;
 };
 
-type Vacancy = {
+export type Vacancy = {
     id: string; // Vacancy ID
     name: string; // Vacancy title
     url: string; // API URL of the vacancy
@@ -118,9 +118,15 @@ type Vacancy = {
     professional_roles?: VacancyProfessionalRole[];
     sort_point_distance?: number; // Distance for sorting
     contacts?: VacancyContact;
+    experience: VacancyExperience;
     counters: {
         responses: number;
     }
+};
+
+type VacancyExperience = {
+    id: string;
+    name: string;
 };
 
 type VacancyContact = {

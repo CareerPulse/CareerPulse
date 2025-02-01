@@ -11,32 +11,40 @@ import Typography from '@mui/material/Typography';
 import {AuthCard} from "../components/auth/AuthCard.tsx";
 import {AuthContainer} from "../components/auth/AuthContainer.tsx";
 import {PageRoute} from "../utils/navigation/PageRoute.tsx";
+import {useNavigate} from "react-router-dom";
+import {useState} from "react";
 
 export const LoginPage = () => {
-    const [emailError, setEmailError] = React.useState(false);
-    const [emailErrorMessage, setEmailErrorMessage] = React.useState('');
-    const [passwordError, setPasswordError] = React.useState(false);
-    const [passwordErrorMessage, setPasswordErrorMessage] = React.useState('');
+    const navigate = useNavigate();
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [emailError, setEmailError] = useState(false);
+    const [emailErrorMessage, setEmailErrorMessage] = useState('');
+    const [passwordError, setPasswordError] = useState(false);
+    const [passwordErrorMessage, setPasswordErrorMessage] = useState('');
+
+    const handleEmail = (value: string) => {
+        setEmail(value);
+    };
+
+    const handlePassword = (value: string) => {
+        setPassword(value);
+    };
 
     const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
         if (emailError || passwordError) {
             event.preventDefault();
             return;
         }
-        const data = new FormData(event.currentTarget);
-        console.log({
-            email: data.get('email'),
-            password: data.get('password'),
-        });
+
+        localStorage.setItem("email", email);
+        navigate(PageRoute.main);
     };
 
     const validateInputs = () => {
-        const email = document.getElementById('email') as HTMLInputElement;
-        const password = document.getElementById('password') as HTMLInputElement;
-
         let isValid = true;
 
-        if (!email.value || !/\S+@\S+\.\S+/.test(email.value)) {
+        if (!email || !/\S+@\S+\.\S+/.test(email)) {
             setEmailError(true);
             setEmailErrorMessage('Please enter a valid email address.');
             isValid = false;
@@ -45,7 +53,7 @@ export const LoginPage = () => {
             setEmailErrorMessage('');
         }
 
-        if (!password.value || password.value.length < 6) {
+        if (!password || password.length < 6) {
             setPasswordError(true);
             setPasswordErrorMessage('Password must be at least 6 characters long.');
             isValid = false;
@@ -93,6 +101,9 @@ export const LoginPage = () => {
                             fullWidth
                             variant="outlined"
                             color={emailError ? 'error' : 'primary'}
+                            onChange={event => {
+                                handleEmail(event.target.value)
+                            }}
                         />
                     </FormControl>
                     <FormControl>
@@ -110,6 +121,9 @@ export const LoginPage = () => {
                             fullWidth
                             variant="outlined"
                             color={passwordError ? 'error' : 'primary'}
+                            onChange={event => {
+                                handlePassword(event.target.value)
+                            }}
                         />
                     </FormControl>
                     <FormControlLabel
