@@ -2,8 +2,8 @@ import apiClient from "../utils/clients/apiClient.ts";
 import {SearchVacanciesRequest, SearchVacanciesResponse} from "../searchApiModels.ts";
 import {toQueryString} from "../utils/toQueryString.ts";
 
-class SearchService {
-    private static route: string = '/search';
+class VacancySearchService {
+    private static route: string = '/resume';
 
     static async search(request: SearchVacanciesRequest): Promise<SearchVacanciesResponse> {
         const response = await apiClient.get<SearchVacanciesResponse>(`${this.route}?${toQueryString(request)}`);
@@ -12,4 +12,4 @@ class SearchService {
     }
 }
 
-export default SearchService;
+export default VacancySearchService;
