@@ -42,7 +42,19 @@ const SearchVacancyPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
-    const text = queryParams.get("text") || "";
+
+    const parseSearchParams = (params: URLSearchParams): SearchVacanciesRequest => {
+        return {
+            text: params.get("text") || undefined,
+            search_field: params.get("search_field") || undefined,
+            experience: params.get("experience") || undefined,
+            employment: params.get("employment") || undefined,
+            schedule: params.get("schedule") || undefined,
+            salary: params.get("salary") ? Number(params.get("salary")) : undefined,
+            only_with_salary: params.get("only_with_salary") === "true",
+            order_by: params.get("order_by") || undefined
+        };
+    };
 
     const [vacancies, setVacancies] = useState<Vacancy[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
@@ -52,38 +64,37 @@ const SearchVacancyPage = () => {
             try {
                 setLoading(true); // Начинаем загрузку
 
-                let request: SearchVacanciesRequest = {
-                    text: text
-                };
-
+                const request = parseSearchParams(queryParams);
                 let vacancies = await VacancySearchService.search(request);
 
-                // Имитация задержки
-                setTimeout(() => {
-                    setVacancies(vacancies.items); // Устанавливаем вакансии после задержки
-                }, 2000); // Задержка 2 секунды
+                setVacancies(vacancies.items);
             } catch (e) {
                 console.log(e);
             } finally {
                 setLoading(false); // Завершаем загрузку
             }
-
         };
 
-        fetchVacancies(); // Вызываем асинхронную функцию для загрузки данных
-    }, [text]);
+        fetchVacancies();
+    }, [location.search]);
 
     const handleSearch = (value: string) => {
-        // Логика обработки поиска
-        navigate(`${PageRoute.searchVacancy}?text=${encodeURIComponent(value)}`);
+        const newParams = new URLSearchParams(queryParams);
+        newParams.set("text", encodeURIComponent(value));
 
-        console.log("Поиск:", value);
+        navigate(`${PageRoute.searchVacancy}?${newParams.toString()}`);
+    };
+
+    const handleAdvancedSearch = () => {
+        navigate(`${PageRoute.advancedSearchVacancy}?${queryParams.toString()}`);
     };
 
     return (
         <Container>
             <Box my={4}>
-                <SearchBar onSearch={handleSearch} searchQuery={text}/>
+                <SearchBar onSearch={handleSearch}
+                           onAdvancedSearch={handleAdvancedSearch}
+                           searchQuery={queryParams.get("text") || ""}/>
             </Box>
 
             {loading ? (

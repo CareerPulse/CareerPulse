@@ -7,10 +7,11 @@ import {PageRoute} from "../../utils/navigation/PageRoute.tsx";
 
 interface ISearchBarProps {
     onSearch: (query: string) => void;
+    onAdvancedSearch?: () => void;
     searchQuery?: string;
 }
 
-const SearchBar: React.FC<ISearchBarProps> = ({onSearch, searchQuery}) => {
+const SearchBar: React.FC<ISearchBarProps> = ({onSearch, searchQuery, onAdvancedSearch}) => {
     const navigate = useNavigate();
     const [query, setQuery] = useState(searchQuery ?? "");
 
@@ -21,7 +22,12 @@ const SearchBar: React.FC<ISearchBarProps> = ({onSearch, searchQuery}) => {
     };
 
     const handleAdvancedSearch = () => {
-        navigate(PageRoute.advancedSearchVacancy);
+        if (onAdvancedSearch === undefined) {
+            navigate(PageRoute.advancedSearchVacancy);
+            return;
+        }
+
+        onAdvancedSearch();
     };
 
     const handleKeyPress = (event: React.KeyboardEvent) => {
