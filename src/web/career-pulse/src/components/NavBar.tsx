@@ -1,16 +1,31 @@
 import {AppBar, Toolbar, Box, Typography, Button, Menu, MenuItem, IconButton, Badge} from '@mui/material';
 import {useNavigate} from 'react-router-dom';
-import {useState, useRef} from 'react';
+import {useState, useRef, useEffect} from 'react';
 import {PageRoute} from "../utils/navigation/PageRoute.tsx";
 import NotificationsIcon from '@mui/icons-material/Notifications';
+import NotificationService from "../services/NotificationService.ts";
+import {NotificationResponse} from "../models/notificationsApiModels.ts";
 
 const NavBar = () => {
     const navigate = useNavigate();
     const [anchorEl, setAnchorEl] = useState(null);
     const [notificationsAnchorEl, setNotificationsAnchorEl] = useState(null);
     const timerRef = useRef(null);
+    const [notifications, setNotifications] = useState<NotificationResponse[]>([]);
 
     let email = localStorage.getItem("email");
+    const isLoggedIn = email !== null;
+
+    useEffect(() => {
+        const fetchNotifications = async () => {
+            if (isLoggedIn) {
+                let response = await NotificationService.getAllMock();
+                setNotifications(response);
+            }
+        };
+
+        fetchNotifications();
+    }, []);
 
     const handleLogout = () => {
         localStorage.removeItem("email");
@@ -48,13 +63,8 @@ const NavBar = () => {
 
     const handleNotificationsClose = () => {
         setNotificationsAnchorEl(null);
+        navigate(PageRoute.notifications);
     };
-
-    const notifications = [
-        {id: 1, text: "Новое сообщение от работодателя"},
-        {id: 2, text: "Вакансия обновлена"},
-        {id: 3, text: "Приглашение на собеседование"}
-    ];
 
     return (
         <AppBar position="static" color="transparent" style={{boxShadow: "none"}}>
@@ -68,7 +78,7 @@ const NavBar = () => {
                     </Typography>
                 </Box>
 
-                {email === null ? (
+                {!isLoggedIn ? (
                     <Button color="inherit" onClick={() => navigate(PageRoute.login)}>
                         Войти
                     </Button>
@@ -91,7 +101,7 @@ const NavBar = () => {
                             {notifications.length > 0 ? (
                                 notifications.map((notification) => (
                                     <MenuItem key={notification.id} onClick={handleNotificationsClose}>
-                                        {notification.text}
+                                        {notification.message}
                                     </MenuItem>
                                 ))
                             ) : (
@@ -116,8 +126,8 @@ const NavBar = () => {
                                 onMouseLeave: handleMenuClose,
                             }}
                         >
-                            <MenuItem>Сохраненные вакансии</MenuItem>
-                            <MenuItem>Все уведомления</MenuItem>
+                            <MenuItem onClick={() => navigate(PageRoute.saved)}>Сохраненные вакансии</MenuItem>
+                            <MenuItem onClick={() => navigate(PageRoute.notifications)}>Все уведомления</MenuItem>
                             <MenuItem onClick={handleLogout}>Выйти</MenuItem>
                         </Menu>
                     </Box>

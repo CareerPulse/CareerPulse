@@ -4,5 +4,6 @@ export enum PageRoute {
     searchVacancy = "/search/vacancy",
     advancedSearchVacancy = "/search/vacancy/advanced",
     register = "/auth/register",
-    login = "/auth/login"
+    login = "/auth/login",
+    notifications = "/notifications"
 }

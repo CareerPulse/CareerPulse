@@ -5,7 +5,7 @@ import SearchBar from "../components/search/SearchBar.tsx";
 import VacancyCard from "../components/search/VacancyCard.tsx";
 import {PageRoute} from "../utils/navigation/PageRoute.tsx";
 import VacancySearchService from "../services/VacancySearchService.ts";
-import {SearchVacanciesRequest, Vacancy} from "../searchApiModels.ts";
+import {SearchVacanciesRequest, Vacancy} from "../models/searchApiModels.ts";
 
 interface VacancyMock {
     id: string;
