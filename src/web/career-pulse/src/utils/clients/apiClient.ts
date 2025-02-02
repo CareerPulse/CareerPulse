@@ -19,7 +19,7 @@ apiClient.interceptors.request.use(config => {
 apiClient.interceptors.response.use(
     response => response,
     error => {
-        const errorMsg = error.response?.data?.error?.message || "unknown error";
+        const errorMsg = error.response?.data?.error?.message || "Произошла неожиданная ошибка на сервере";
         triggerError(errorMsg);
         return Promise.reject(error);
     }

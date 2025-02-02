@@ -12,6 +12,7 @@ import AdvancedSearchPage from "./pages/AdvancedSearchPage.tsx";
 import AppTheme from "./theme/AppTheme.tsx";
 import NotificationsPage from "./pages/NotificationsPage.tsx";
 import SavedVacanciesPage from "./pages/SavedVacanciesPage.tsx";
+import SettingsPage from "./pages/SettingsPage.tsx";
 
 interface ILayoutProps {
     children: ReactNode;
@@ -54,6 +55,7 @@ function AppContent() {
                     <Route path={PageRoute.register} element={<RegisterPage/>}/>
                     <Route path={PageRoute.saved} element={<SavedVacanciesPage/>}/>
                     <Route path={PageRoute.notifications} element={<NotificationsPage/>}/>
+                    <Route path={PageRoute.settings} element={<SettingsPage/>}/>
                     <Route path="*" element={<Navigate replace to={PageRoute.main}/>}/>
                 </Routes>
             </Container>
