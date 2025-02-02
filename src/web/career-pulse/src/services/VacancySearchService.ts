@@ -1,5 +1,5 @@
 import apiClient from "../utils/clients/apiClient.ts";
-import {SearchVacanciesRequest, SearchVacanciesResponse} from "../searchApiModels.ts";
+import {SearchVacanciesRequest, SearchVacanciesResponse} from "../models/searchApiModels.ts";
 import {toQueryString} from "../utils/toQueryString.ts";
 
 class VacancySearchService {

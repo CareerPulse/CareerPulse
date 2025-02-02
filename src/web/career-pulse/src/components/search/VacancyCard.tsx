@@ -1,6 +1,6 @@
 import React from "react";
 import {Box, Button, Typography, Card, CardContent} from "@mui/material";
-import {Vacancy} from "../../searchApiModels.ts";
+import {Vacancy} from "../../models/searchApiModels.ts";
 
 // interface VacancyMock {
 //     id: string;

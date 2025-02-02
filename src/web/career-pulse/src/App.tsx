@@ -10,6 +10,8 @@ import NavBar from "./components/NavBar.tsx";
 import {ReactNode} from "react";
 import AdvancedSearchPage from "./pages/AdvancedSearchPage.tsx";
 import AppTheme from "./theme/AppTheme.tsx";
+import NotificationsPage from "./pages/NotificationsPage.tsx";
+import SavedVacanciesPage from "./pages/SavedVacanciesPage.tsx";
 
 interface ILayoutProps {
     children: ReactNode;
@@ -17,8 +19,6 @@ interface ILayoutProps {
 
 const Layout = ({children}: ILayoutProps) => {
     const location = useLocation();
-
-    // Проверяем, нужно ли скрывать NavBar
     const hideNavBar = location.pathname === PageRoute.main;
 
     return (
@@ -52,6 +52,8 @@ function AppContent() {
                     <Route path={PageRoute.advancedSearchVacancy} element={<AdvancedSearchPage/>}/>
                     <Route path={PageRoute.login} element={<LoginPage/>}/>
                     <Route path={PageRoute.register} element={<RegisterPage/>}/>
+                    <Route path={PageRoute.saved} element={<SavedVacanciesPage/>}/>
+                    <Route path={PageRoute.notifications} element={<NotificationsPage/>}/>
                     <Route path="*" element={<Navigate replace to={PageRoute.main}/>}/>
                 </Routes>
             </Container>
