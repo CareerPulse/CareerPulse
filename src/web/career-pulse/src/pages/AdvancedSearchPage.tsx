@@ -13,21 +13,26 @@ import {
     Stack,
 } from "@mui/material";
 import {PageRoute} from "../utils/navigation/PageRoute.tsx";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import {toQueryString} from "../utils/toQueryString.ts";
 
 const AdvancedSearchPage = () => {
     const navigate = useNavigate();
-    const [filters, setFilters] = useState({
+    const location = useLocation();
+    const queryParams = new URLSearchParams(location.search);
+
+    const getInitialFilters = (params: URLSearchParams) => ({
         text: "",
-        search_field: "",
-        experience: "",
-        employment: "",
-        schedule: "",
-        salary: "",
-        only_with_salary: false,
-        order_by: "",
+        search_field: params.get("search_field") || "",
+        experience: params.get("experience") || "",
+        employment: params.get("employment") || "",
+        schedule: params.get("schedule") || "",
+        salary: params.get("salary") || "",
+        only_with_salary: params.get("only_with_salary") === "true",
+        order_by: params.get("order_by") || "",
     });
+
+    const [filters, setFilters] = useState(getInitialFilters(queryParams));
 
     const handleInputChange = (name: string, value: unknown) => {
         setFilters((prev) => ({
@@ -45,10 +50,7 @@ const AdvancedSearchPage = () => {
     };
 
     const handleSubmit = () => {
-        console.log("Filters applied:", filters);
         navigate(`${PageRoute.searchVacancy}?${toQueryString(filters)}`);
-
-        // Здесь можно передать параметры на сервер
     };
 
     return (
