@@ -128,6 +128,7 @@ const NavBar = () => {
                         >
                             <MenuItem onClick={() => navigate(PageRoute.saved)}>Сохраненные вакансии</MenuItem>
                             <MenuItem onClick={() => navigate(PageRoute.notifications)}>Все уведомления</MenuItem>
+                            <MenuItem onClick={() => navigate(PageRoute.settings)}>Настройки</MenuItem>
                             <MenuItem onClick={handleLogout}>Выйти</MenuItem>
                         </Menu>
                     </Box>
