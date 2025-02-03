@@ -1,11 +1,11 @@
 import {useState, useEffect} from 'react';
 import {Container, Box, Typography, CircularProgress} from '@mui/material';
 import VacancyService from "../services/VacancyService.ts";
-import {Vacancy} from "../models/searchApiModels.ts";
 import VacancyCard from "../components/search/VacancyCard.tsx";
+import {VacancyResponse} from "../models/searchApiModels.ts";
 
 const SavedVacanciesPage = () => {
-    const [vacancies, setVacancies] = useState<Vacancy[]>([]);
+    const [vacancies, setVacancies] = useState<VacancyResponse[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -37,7 +37,7 @@ const SavedVacanciesPage = () => {
                     </Box>
                 ) : vacancies.length > 0 ? (
                     vacancies.map((vacancy) => (
-                        <VacancyCard key={vacancy.id} vacancy={vacancy}/>
+                        <VacancyCard key={vacancy.link} vacancy={vacancy}/>
                     ))
                 ) : (
                     <Typography variant="h6" textAlign="center">

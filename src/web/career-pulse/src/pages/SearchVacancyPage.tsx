@@ -5,58 +5,29 @@ import SearchBar from "../components/search/SearchBar.tsx";
 import VacancyCard from "../components/search/VacancyCard.tsx";
 import {PageRoute} from "../utils/navigation/PageRoute.tsx";
 import VacancySearchService from "../services/VacancySearchService.ts";
-import {SearchVacanciesRequest, Vacancy} from "../models/searchApiModels.ts";
-
-interface VacancyMock {
-    id: string;
-    name: string;
-    employer: string;
-    salary?: string;
-    experience: string;
-    location: string;
-    url: string;
-}
-
-const mockVacancies: VacancyMock[] = [
-    {
-        id: "1",
-        name: "Личный помощник",
-        employer: "Lesyabishap",
-        salary: "от 100 000 ₽ в месяц",
-        experience: "Без опыта",
-        location: "Казань, Козья слобода",
-        url: "https://hh.ru/vacancy/1",
-    },
-    {
-        id: "2",
-        name: "Менеджер проектов",
-        employer: "ООО Прогресс",
-        salary: "от 150 000 ₽ в месяц",
-        experience: "1–3 года",
-        location: "Москва",
-        url: "https://hh.ru/vacancy/2",
-    },
-];
+import {SearchRequest, VacancyResponse} from "../models/searchApiModels.ts";
 
 const SearchVacancyPage = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
 
-    const parseSearchParams = (params: URLSearchParams): SearchVacanciesRequest => {
+    const parseSearchParams = (params: URLSearchParams): SearchRequest => {
         return {
-            text: params.get("text") || undefined,
-            search_field: params.get("search_field") || undefined,
-            experience: params.get("experience") || undefined,
-            employment: params.get("employment") || undefined,
-            schedule: params.get("schedule") || undefined,
-            salary: params.get("salary") ? Number(params.get("salary")) : undefined,
-            only_with_salary: params.get("only_with_salary") === "true",
-            order_by: params.get("order_by") || undefined
+            sorting: params.get("sorting") || "ASC",
+            title: decodeURIComponent(params.get("title") || ""),
+            // text: params.get("text") || undefined,
+            // search_field: params.get("search_field") || undefined,
+            // experience: params.get("experience") || undefined,
+            // employment: params.get("employment") || undefined,
+            // schedule: params.get("schedule") || undefined,
+            // salary: params.get("salary") ? Number(params.get("salary")) : undefined,
+            // only_with_salary: params.get("only_with_salary") === "true",
+            // order_by: params.get("order_by") || undefined
         };
     };
 
-    const [vacancies, setVacancies] = useState<Vacancy[]>([]);
+    const [vacancies, setVacancies] = useState<VacancyResponse[]>([]);
     const [loading, setLoading] = useState<boolean>(false);
 
     useEffect(() => {
@@ -65,13 +36,13 @@ const SearchVacancyPage = () => {
                 setLoading(true); // Начинаем загрузку
 
                 const request = parseSearchParams(queryParams);
-                let vacancies = await VacancySearchService.search(request);
+                let response = await VacancySearchService.search(request);
 
-                setVacancies(vacancies.items);
+                setVacancies(response.list);
             } catch (e) {
                 console.log(e);
             } finally {
-                setLoading(false); // Завершаем загрузку
+                setLoading(false);
             }
         };
 
@@ -80,7 +51,7 @@ const SearchVacancyPage = () => {
 
     const handleSearch = (value: string) => {
         const newParams = new URLSearchParams(queryParams);
-        newParams.set("text", encodeURIComponent(value));
+        newParams.set("title", encodeURIComponent(value));
 
         navigate(`${PageRoute.searchVacancy}?${newParams.toString()}`);
     };
@@ -94,7 +65,7 @@ const SearchVacancyPage = () => {
             <Box my={4}>
                 <SearchBar onSearch={handleSearch}
                            onAdvancedSearch={handleAdvancedSearch}
-                           searchQuery={queryParams.get("text") || ""}/>
+                           searchQuery={queryParams.get("title") || ""}/>
             </Box>
 
             {loading ? (
@@ -103,7 +74,7 @@ const SearchVacancyPage = () => {
                 </Box>
             ) : vacancies.length > 0 ? (
                 vacancies.map((vacancy) => (
-                    <VacancyCard key={vacancy.id} vacancy={vacancy}/>
+                    <VacancyCard key={vacancy.link} vacancy={vacancy}/>
                 ))
             ) : (
                 <Typography variant="h6" textAlign="center">

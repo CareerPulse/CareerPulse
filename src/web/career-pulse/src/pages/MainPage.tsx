@@ -8,7 +8,7 @@ const MainPage = () => {
 
     const handleSearch = (value: string) => {
         if (value.trim()) {
-            navigate(`${PageRoute.searchVacancy}?text=${encodeURIComponent(value)}`);
+            navigate(`${PageRoute.searchVacancy}?title=${encodeURIComponent(value)}`);
         }
     };
 

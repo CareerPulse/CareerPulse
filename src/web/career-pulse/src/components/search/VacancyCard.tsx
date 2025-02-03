@@ -1,32 +1,23 @@
 import React from "react";
 import {Box, Button, Typography, Card, CardContent} from "@mui/material";
-import {Vacancy} from "../../models/searchApiModels.ts";
-
-// interface VacancyMock {
-//     id: string;
-//     name: string;
-//     employer: string;
-//     salary?: string;
-//     experience: string;
-//     location: string;
-//     url: string;
-// }
+import {VacancyResponse} from "../../models/searchApiModels.ts";
 
 interface VacancyCardProps {
-    vacancy: Vacancy;
+    vacancy: VacancyResponse;
 }
 
 const VacancyCard: React.FC<VacancyCardProps> = ({vacancy}) => {
     return (
         <Card variant="outlined" sx={{mb: 2}}>
             <CardContent>
-                <Typography variant="h6" fontWeight="bold">{vacancy.name}</Typography>
-                <Typography variant="body2" color="text.secondary">{vacancy.employer.name}</Typography>
-                {vacancy.salary && <Typography variant="body2">Зарплата: {vacancy.salary.gross} {vacancy.salary.currency}</Typography>}
-                <Typography variant="body2">Опыт работы: {vacancy.experience.name}</Typography>
-                <Typography variant="body2" color="text.secondary">{vacancy.address?.city}</Typography>
+                <Typography variant="h6" fontWeight="bold">{vacancy.title}</Typography>
+                <Typography variant="body2" color="text.secondary">{vacancy.company}</Typography>
+                {vacancy.salary &&
+                    <Typography variant="body2">Зарплата: {vacancy.salary}</Typography>}
+                <Typography variant="body2">Опыт работы: {vacancy.experience}</Typography>
+                <Typography variant="body2" color="text.secondary">{vacancy.location}</Typography>
                 <Box mt={2}>
-                    <Button variant="contained" color="primary" href={vacancy.alternate_url} target="_blank">
+                    <Button variant="contained" color="primary" href={vacancy.link} target="_blank">
                         Перейти к вакансии
                     </Button>
                 </Box>

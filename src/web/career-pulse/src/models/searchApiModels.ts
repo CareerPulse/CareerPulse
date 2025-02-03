@@ -1,7 +1,27 @@
 // Request and Response Models for API Integration
 
+export type SearchRequest = {
+    title: string;
+    sorting: string;
+};
+
+export type SearchResponse = {
+    list: VacancyResponse[];
+};
+
+export type VacancyResponse = {
+    title: string;
+    description: string;
+    link: string;
+    location: string;
+    salary: string;
+    experience: string;
+    company: string;
+};
+
 // Request Parameters Model
-export type SearchVacanciesRequest = {
+// @ts-ignore
+type SearchVacanciesRequestOld = {
     page?: number; // Default: 0
     per_page?: number; // Default: 10, Max: 100
     text?: string; // Search text with optional query language
@@ -40,7 +60,8 @@ export type SearchVacanciesRequest = {
 };
 
 // Response Models
-export type SearchVacanciesResponse = {
+// @ts-ignore
+type SearchVacanciesResponse = {
     items: Vacancy[]; // List of vacancies
     found: number; // Total vacancies found
     pages: number; // Total pages available
@@ -103,7 +124,7 @@ type AddressMetroStation = {
     lng: number;
 };
 
-export type Vacancy = {
+type Vacancy = {
     id: string; // Vacancy ID
     name: string; // Vacancy title
     url: string; // API URL of the vacancy

@@ -1,16 +1,16 @@
-import {SearchVacanciesResponse, Vacancy} from "../models/searchApiModels.ts";
 import apiClient from "../utils/clients/apiClient.ts";
+import {SearchResponse, VacancyResponse} from "../models/searchApiModels.ts";
 
 class VacancyService {
     private static route: string = '/vacancy';
 
-    static async getSaved(): Promise<Vacancy[]> {
-        const response = await apiClient.get<SearchVacanciesResponse>(`${this.route}/saved`);
+    static async getSaved(): Promise<VacancyResponse[]> {
+        const response = await apiClient.get<SearchResponse>(`${this.route}/saved`);
 
-        return response.data.items;
+        return response.data.list;
     }
 
-    static async getSavedMock(): Promise<Vacancy[]> {
+    static async getSavedMock(): Promise<VacancyResponse[]> {
         return [];
     }
 }

@@ -22,14 +22,16 @@ const AdvancedSearchPage = () => {
     const queryParams = new URLSearchParams(location.search);
 
     const getInitialFilters = (params: URLSearchParams) => ({
-        text: "",
+        sorting: params.get("sorting") || "ASC",
+        title: decodeURIComponent(params.get("title") || ""),
+        // text: "",
         search_field: params.get("search_field") || "",
         experience: params.get("experience") || "",
         employment: params.get("employment") || "",
         schedule: params.get("schedule") || "",
         salary: params.get("salary") || "",
         only_with_salary: params.get("only_with_salary") === "true",
-        order_by: params.get("order_by") || "",
+        // order_by: params.get("order_by") || "",
     });
 
     const [filters, setFilters] = useState(getInitialFilters(queryParams));
@@ -65,8 +67,8 @@ const AdvancedSearchPage = () => {
                     <TextField
                         fullWidth
                         label="Ключевые слова"
-                        name="text"
-                        value={filters.text}
+                        name="title"
+                        value={filters.title}
                         onChange={(event) => handleInputChange(event.target.name, event.target.value)}
                         placeholder="Например, директор по продажам"
                         variant="outlined"
@@ -187,16 +189,17 @@ const AdvancedSearchPage = () => {
                         <InputLabel id="order_by-label">Сортировка</InputLabel>
                         <Select
                             labelId="order_by-label"
-                            name="order_by"
-                            value={filters.order_by}
+                            name="sorting"
+                            value={filters.sorting}
                             variant="standard"
                             onChange={(event) => handleInputChange(event.target.name, event.target.value)}
                         >
-                            <MenuItem value="">По умолчанию</MenuItem>
-                            <MenuItem value="relevance">По соответствию</MenuItem>
-                            <MenuItem value="salary_desc">По убыванию зарплат</MenuItem>
-                            <MenuItem value="salary_asc">По возрастанию зарплаты</MenuItem>
-                            <MenuItem value="publication_time">По дате изменения</MenuItem>
+                            <MenuItem value="ASC">По возрастанию</MenuItem>
+                            <MenuItem value="DESC">По убыванию</MenuItem>
+                            {/*<MenuItem value="relevance">По соответствию</MenuItem>*/}
+                            {/*<MenuItem value="salary_desc">По убыванию зарплат</MenuItem>*/}
+                            {/*<MenuItem value="salary_asc">По возрастанию зарплаты</MenuItem>*/}
+                            {/*<MenuItem value="publication_time">По дате изменения</MenuItem>*/}
                         </Select>
                     </FormControl>
                 </Box>

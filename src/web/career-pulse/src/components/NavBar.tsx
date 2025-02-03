@@ -45,6 +45,7 @@ const NavBar = () => {
     };
 
     const handleButtonMouseLeave = () => {
+        // @ts-ignore
         timerRef.current = setTimeout(() => {
             handleMenuClose();
         }, 20000);
@@ -63,7 +64,6 @@ const NavBar = () => {
 
     const handleNotificationsClose = () => {
         setNotificationsAnchorEl(null);
-        navigate(PageRoute.notifications);
     };
 
     return (
