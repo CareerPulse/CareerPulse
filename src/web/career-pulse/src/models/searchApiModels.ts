@@ -6,7 +6,7 @@ export type SearchRequest = {
 };
 
 export type SearchResponse = {
-    list: VacancyResponse[];
+    items: VacancyResponse[];
 };
 
 export type VacancyResponse = {

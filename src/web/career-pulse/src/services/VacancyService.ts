@@ -7,7 +7,7 @@ class VacancyService {
     static async getSaved(): Promise<VacancyResponse[]> {
         const response = await apiClient.get<SearchResponse>(`${this.route}/saved`);
 
-        return response.data.list;
+        return response.data.items;
     }
 
     static async getSavedMock(): Promise<VacancyResponse[]> {

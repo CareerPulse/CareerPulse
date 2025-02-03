@@ -38,7 +38,7 @@ const SearchVacancyPage = () => {
                 const request = parseSearchParams(queryParams);
                 let response = await VacancySearchService.search(request);
 
-                setVacancies(response.list);
+                setVacancies(response.items);
             } catch (e) {
                 console.log(e);
             } finally {
